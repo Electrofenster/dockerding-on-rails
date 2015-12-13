@@ -1,5 +1,5 @@
 FROM ruby:2.2.3
-MAINTAINER Larsmehrhoff@gmx.net
+MAINTAINER Evolutio1994@gmx.de
 
 # Install apt based dependencies required to run Rails as
 # well as RubyGems. As the Ruby image itself is based on a
@@ -16,7 +16,7 @@ RUN apt-get update && apt-get install -y \
 RUN mkdir -p /app
 WORKDIR /app
 
-#linking nodejs to node
+# linking nodejs to node
 RUN ln -s /usr/bin/nodejs /usr/bin/node
 
 # Cloneing dockerding
