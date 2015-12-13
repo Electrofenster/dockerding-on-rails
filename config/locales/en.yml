@@ -1,0 +1,93 @@
+en:
+  application:
+    title: "Dockerding"
+
+    nav:
+      images: "Images"
+      languages: "Language"
+      back_to: "back_to"
+
+  languages:
+    de: "German"
+    en: "English"
+
+  container:
+    show:
+      nav:
+        tabs:
+          information: "Informationen"
+          logs: "Logs"
+
+      boxes:
+        action:
+          title: "Actions"
+          start: "start"
+          stop: "stop"
+          restart: "restart"
+          remove: "remove"
+
+        basic_information:
+          title: "Basic Informations"
+          name: "Name"
+          status: "Status"
+          privileged: "Privileged"
+          pid: "Pid"
+          image: "Image"
+          restart_count: "RestartCount"
+          driver: "Driver"
+
+        env:
+          title: "Environment-Vars"
+          env: "Env"
+
+        network:
+          title: "Network"
+          ports: "Ports"
+          gateway: "Gateway"
+          ip_address: "IP Address"
+          mac_address: "MAC-Adress"
+
+        volumes:
+          title: "Sharedfolder (host: vm)"
+
+        configuration:
+          title: "Configuration"
+          hostname: "Hostname"
+          attach_stdin: "AttachStdin"
+          attach_stdout: "AttachStdout"
+          attach_stderr: "AttachStderr"
+          tty: "Tty"
+          image: "Image"
+          entrypoint: "Entrypoint"
+          memory: "Memory"
+          memory_swap: "MemorySwap"
+          cpu_shares: "CpuShares"
+          cpuset: "Cpuset"
+
+    index:
+      title: "Container"
+      create: "create container"
+      table:
+        name: "Name"
+        id: "ID"
+        image: "Image"
+        command: "Command"
+        created: "Created"
+        status: "Status"
+        ports: "Ports"
+
+    new:
+      title: "Container creation"
+      hostname: "Hostname:"
+      user: "User:"
+      attach_stdin: "AttachStdin:"
+      attach_stdout: "AttachStdout:"
+      attach_stderr: "AttachStderr:"
+      env: "Env:"
+      cmd: "Cmd:"
+      entrypoint: "Entrypoint:"
+      image: "Image:"
+      working_dir: "WorkingDir:"
+      btn:
+        submit: "Create"
+        cancle: "Cancle"

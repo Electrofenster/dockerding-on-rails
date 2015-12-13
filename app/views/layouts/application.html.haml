@@ -1,0 +1,44 @@
+!!!
+%html
+  %head
+    %meta{:content => "text/html; charset=UTF-8", "http-equiv" => "Content-Type"}/
+    %meta{:content => "width=device-width, initial-scale=1", :name => "viewport"}/
+    %title
+      = t 'application.title'
+    = stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track' => true
+    = javascript_include_tag 'application', 'data-turbolinks-track' => true
+    = csrf_meta_tags
+  %body
+    %nav.navbar.navbar-default
+      .container-fluid
+        .navbar-header
+          %button.navbar-toggle.collapsed{"aria-expanded" => "false", "data-target" => "#bs-example-navbar-collapse-1", "data-toggle" => "collapse", :type => "button"}
+            %span.sr-only Toggle navigation
+            %span.icon-bar
+            %span.icon-bar
+            %span.icon-bar
+          = link_to t('application.title'), '/', :class => 'navbar-brand'
+        #bs-example-navbar-collapse-1.collapse.navbar-collapse
+          %ul.nav.navbar-nav
+            %li
+              = link_to t('application.nav.images'), images_path
+          %ul.nav.navbar-nav.navbar-right
+            %li.dropdown
+              %a.dropdown-toggle{"aria-expanded" => "false", "aria-haspopup" => "true", "data-toggle" => "dropdown", :href => "#", :role => "button"}
+                = t 'application.nav.languages'
+                %span.caret
+              %ul.dropdown-menu
+                %li
+                  %a{:href => "?locale=en"}
+                    %span.flag-icon.flag-icon-gb
+                    %span
+                      = t 'languages.en'
+                %li
+                  %a{:href => "?locale=de"}
+                    %span.flag-icon.flag-icon-de
+                    %span
+                      = t 'languages.de'
+
+    .container
+      = render partial: "shared/flash_messages", flash: flash
+      = yield

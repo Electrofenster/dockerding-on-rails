@@ -1,0 +1,61 @@
+.row
+  .col-sm-12
+    .panel.panel-default
+      .panel-heading
+        %h3.panel-title
+          = t 'container.new.title'
+      .panel-body
+        .col-sm-9
+          = form_tag container_create_path, :method => :post do
+            .form-group
+              = label_tag :hostname, t('container.new.hostname')
+              = text_field_tag :hostname, "", :class => "form-control", :placeholder => "dockerui.on.rails"
+
+            .form-group
+              = label_tag :user, t('container.new.user')
+              = text_field_tag :user, "", :class => "form-control"
+
+            .form-group
+              = label_tag :attachstdin, t('container.new.attach_stdin')
+              = check_box_tag :attachstdin, "", false, :data => {:name => "switch"}
+
+            .form-group
+              = label_tag :attachstdout, t('container.new.attach_stdout')
+              = check_box_tag :attachstdout, "", false, :data => {:name => "switch"}
+
+            .form-group
+              = label_tag :attachstderr, t('container.new.attach_stderr')
+              = check_box_tag :attachstderr, "", false, :data => {:name => "switch"}
+
+            .form-group
+              = label_tag :env, t('container.new.env')
+              = text_area_tag :env, "", :class => "form-control", :placeholder => "var1=val1, var2=val2, var3=val3"
+
+            .form-group
+              = label_tag :cmd, t('container.new.cmd')
+              = text_field_tag :cmd, "", :class => "form-control", :placeholder => "./run.sh"
+
+            .form-group
+              = label_tag :entrypoint, t('container.new.entrypoint')
+              = text_field_tag :entrypoint, "", :class => "form-control", :placeholder => ""
+
+            .form-group
+              = label_tag :image, t('container.new.image')
+              %select{:name => "image", :data => {:name => "select2"}}
+                - @images.each do |image|
+                  %option{:value => image[1]}
+                    = image[1]
+
+            .form-group
+              = label_tag :workingdir, t('container.new.working_dir')
+              = text_field_tag :workingdir, "", :class => "form-control", :placeholder => ""
+            .form-group
+            .form-group
+            .form-group
+            .form-group
+            .form-group
+            .form-group
+            .form-group
+            .form-group
+              = submit_tag t('container.new.btn.submit'), :class => "btn btn-primary"
+              = link_to t('container.new.btn.cancle'), containers_path, :class => "btn btn-danger"

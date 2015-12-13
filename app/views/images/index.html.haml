@@ -1,0 +1,48 @@
+.row
+  .col-sm-12
+
+.row
+  .col-sm-12
+    .panel.panel-default
+      .panel-heading
+        %h3.panel-title Images
+      .panel-body
+        %p
+          Hier werden die heruntergeladenen Images angezeigt von denen man einen Container erstellen kann.
+        / %hr
+        .table-responsive
+          %table.table-condensed.table-striped.table-hover.w-100
+            %thead
+              %tr
+                %th
+                  ID
+                %th
+                  RepoTag
+                %th
+                  Created
+                %th
+                  VirtualSize
+                %th
+                  Action
+
+            %tbody
+              - @images.each do |image|
+                %tr
+                  %td
+                    = link_to image_path image.id.to_s.truncate(12, omission: '') do
+                      = image.id.to_s.truncate(12, omission: '')
+                  %td
+                    = link_to image_path image.id.to_s.truncate(12, omission: '') do
+                      = image.info['RepoTags'][0]
+                  %td
+                    = Time.at(image.info['Created']).strftime('%d.%m.%Y %H:%M')
+                    Uhr
+                  %td
+                    = number_to_human_size(image.info['VirtualSize'], precision: 3)
+                  %td
+                    = link_to image_delete_path(image.id.to_s.truncate(12, omission: '')), :method => :delete, data: { confirm: "Das Image löschen?", toggle: "tooltip", placement: "top" }, :title => "delete image" do
+                      = glyph(:remove)
+
+                    / = link_to image_download_path(image.id.to_s.truncate(12, omission: '')), data: { toggle: "tooltip", placement: "top" }, :title => "download image" do
+                    /   = glyph(:download_alt)
+

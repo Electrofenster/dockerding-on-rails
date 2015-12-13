@@ -1,11 +1,14 @@
+### Rails ###
 *.rbc
 capybara-*.html
 .rspec
 /log
 /tmp
+/config/database.yml
 /db/*.sqlite3
 /db/*.sqlite3-journal
 /public/system
+/public/images
 /coverage/
 /spec/tmp
 **.orig
@@ -29,7 +32,6 @@ config/secrets.yml
 # if using bower-rails ignore default bower_components path bower.json files
 /vendor/assets/bower_components
 *.bowerrc
-bower.json
 
-# Ignore pow environment settings
+#Ignore pow enironment settings
 .powenv

@@ -1,0 +1,71 @@
+.row
+  .col-sm-12
+    %span.pull-right
+      = link_to container_new_path, :class => 'btn btn-default btn-sm', :id => 'open-container-wizard' do
+        = t 'container.index.create'
+
+  %div.clearfix
+    %br
+    %br
+
+  .col-sm-12
+    .panel.panel-default.clearfix
+      .panel-heading
+        %h3.panel-title
+          = t 'container.index.title'
+
+      .panel-body
+        .table-responsive
+          %table.table-condensed.table-striped.table-hover.w-100.mb-0
+            %thead
+              %tr
+                %th
+                  = t 'container.index.table.name'
+                %th
+                  = t 'container.index.table.id'
+                %th
+                  = t 'container.index.table.image'
+                %th
+                  = t 'container.index.table.command'
+                %th
+                  = t 'container.index.table.created'
+                %th
+                  = t 'container.index.table.status'
+                %th
+                  = t 'container.index.table.ports'
+
+            %tbody
+              - @containers.each do |container|
+                %tr
+                  %td
+                    = link_to container_path container.id.to_s.truncate(12, omission: '') do
+                      = container.info['Names'].join(', ')
+                  %td
+                    = link_to container_path container.id.to_s.truncate(12, omission: '') do
+                      = container.id.to_s.truncate(12, omission: '')
+                  %td
+                    = link_to image_path container.info['ImageID'].truncate(12, omission: '') do
+                      = container.info['Image']
+                  %td
+                    = container.info['Command']
+                  %td
+                    = Time.at(container.info['Created']).strftime('%d.%m.%Y %H:%M')
+                  %td
+                    - str = container.info['Status']
+                    - if str.include? 'Up'
+                      %span.label.label-success
+                        = str
+                    - elsif str.include? 'Exited'
+                      %span.label.label-warning
+                        = str
+                    - else
+                      1
+                  %td
+                    - container.info['Ports'].each do |port|
+                      - if port['PublicPort']
+                        = port['PublicPort']
+                        \->
+                      = port['PrivatePort']
+                      \/
+                      = port['Type']
+                      %br

@@ -1,0 +1,237 @@
+%nav
+  %ul.pager
+    %li.previous
+      = link_to containers_path do
+        %span{"aria-hidden" => "true"} &larr;
+        = t 'application.nav.back_to'
+
+%h1
+  %span{ data: { toggle: "tooltip", placement: "right" }, :title => @container.id.truncate(12, omission: '') }
+    = @container.info['Name']
+
+%ul.nav.nav-tabs{:role => "tablist"}
+  %li.active{:role => "presentation"}
+    %a{"aria-controls" => "home", "data-toggle" => "tab", :href => "#home", :role => "tab"}
+      = t 'container.show.nav.tabs.information'
+
+  %li{:role => "presentation"}
+    %a{"aria-controls" => "profile", "data-toggle" => "tab", :href => "#logs", :role => "tab"}
+      = t 'container.show.nav.tabs.logs'
+
+.tab-content
+  #home.tab-pane.active{:role => "tabpanel"}
+    .col-sm-8
+      %br
+      .panel.panel-default
+        .panel-heading
+          %h3.panel-title
+            = t 'container.show.boxes.action.title'
+        .panel-body
+          .control-btn.clearfix
+            - if @container.info['State']['Status'] == 'exited' || @container.info['State']['Status'] == 'created'
+              = button_to t('container.show.boxes.action.start'), { :controller => :containers, :action => :start }, { :method => :get, :class => "btn btn-primary" }
+            - else
+              = button_to t('container.show.boxes.action.start'), { :controller => :containers, :action => :start }, { :method => :get, :class => "btn btn-primary", :disabled => true }
+
+            - if @container.info['State']['Status'] == 'running'
+              = button_to t('container.show.boxes.action.stop'), { :controller => :containers, :action => :stop }, { :method => :get, :class => "btn btn-warning" }
+              = button_to t('container.show.boxes.action.restart'), { :controller => :containers, :action => :restart }, { :method => :get, :class => "btn btn-info" }
+              = button_to t('container.show.boxes.action.remove'), { :controller => :containers, :action => :remove }, { :method => :get, :class => "btn btn-danger", :disabled => true }
+            - elsif @container.info['State']['Status'] == 'created'
+              = button_to t('container.show.boxes.action.stop'), { :controller => :containers, :action => :stop }, { :method => :get, :class => "btn btn-warning", :disabled => true }
+              = button_to t('container.show.boxes.action.restart'), { :controller => :containers, :action => :restart }, { :method => :get, :class => "btn btn-info" }
+              = button_to t('container.show.boxes.action.remove'), { :controller => :containers, :action => :remove }, { :method => :get, :class => "btn btn-danger", :disabled => true }
+            - else
+              = button_to t('container.show.boxes.action.stop'), { :controller => :containers, :action => :stop }, { :method => :get, :class => "btn btn-warning", :disabled => true }
+              = button_to t('container.show.boxes.action.restart'), { :controller => :containers, :action => :restart }, { :method => :get, :class => "btn btn-info", :disabled => true }
+              = button_to t('container.show.boxes.action.remove'), { :controller => :containers, :action => :remove }, { :method => :get, :class => "btn btn-danger" }
+
+      .panel.panel-default
+        .panel-heading
+          %h3.panel-title
+            = t 'container.show.boxes.basic_information.title'
+        .panel-body.no-padding
+          %table.table.table-striped.mb-0
+            %tbody
+              %tr
+                %td
+                  = t 'container.show.boxes.basic_information.title'
+                %td
+                  = @container.info['Name']
+              %tr
+                %td
+                  = t 'container.show.boxes.basic_information.status'
+                %td.w-100
+                  - status = @container.info['State']['Status']
+                  - if status == 'running'
+                    %span.label.label-success
+                      = status
+                  - else
+                    %span.label.label-warning
+                      = status
+              %tr
+                %td
+                  = t 'container.show.boxes.basic_information.privileged'
+                %td
+                  = @container.info['HostConfig']['Privileged']
+              %tr
+                %td
+                  = t 'container.show.boxes.basic_information.pid'
+                %td.w-100
+                  = @container.info['State']['Pid']
+              %tr
+                %td
+                  = t 'container.show.boxes.basic_information.image'
+                %td.w-100
+                  = link_to image_path @container.info['Image'].truncate(12, omission: '') do
+                    = @container.info['Image'].truncate(12, omission: '')
+              %tr
+                %td
+                  = t 'container.show.boxes.basic_information.restart_count'
+                %td
+                  = @container.info['RestartCount']
+              %tr
+                %td
+                  = t 'container.show.boxes.basic_information.driver'
+                %td
+                  = @container.info['Driver']
+
+      .panel.panel-default
+        .panel-heading
+          %h3.panel-title
+            = t 'container.show.boxes.env.title'
+        .panel-body.no-padding
+          %table.table.table-striped.mb-0
+            %tbody
+              - if @container.info['Config']['Env']
+                %tr
+                  %td
+                    = t 'container.show.boxes.env.env'
+                  %td.w-100
+                    = @container.info['Config']['Env'].join("<br>").html_safe
+
+    .col-sm-4
+      %br
+      .panel.panel-default
+        .panel-heading
+          %h3.panel-title
+            = t 'container.show.boxes.network.title'
+        .panel-body.no-padding
+          - network = @container.info['NetworkSettings']
+          %table.table.table-striped.mb-0
+            %tbody
+            %tr
+              %td
+                = t 'container.show.boxes.network.ports'
+              %td
+                - if network['Ports'].to_a.kind_of?(Array)
+                  - network['Ports'].to_a.each do |port|
+                    - if port[1]
+                      #{port[1][0]['HostIp']}:#{port[1][0]['HostPort']}
+                      \->
+                    = port[0]
+                    %br/
+            %tr
+              %td
+                = t 'container.show.boxes.network.gateway'
+              %td
+                = network['Gateway']
+            %tr
+              %td
+                = t 'container.show.boxes.network.ip_adress'
+              %td
+                = network['IPAddress']
+            %tr
+              %td
+                = t 'container.show.boxes.network.mac_adress'
+              %td
+                = network['MacAddress']
+
+      - volumes = @container.info['HostConfig']['Binds'].to_a
+      - if volumes.kind_of?(Array) && volumes.count > 0
+        .panel.panel-default
+          .panel-heading
+            %h3.panel-title
+              = t 'container.show.boxes.volumes.title'
+          .panel-body.no-padding
+            %table.table.table-striped.mb-0
+              %tbody
+                - volumes.to_a.each do |vol|
+                  %tr
+                    %td
+                      = vol.gsub(":", " : ")
+
+      .panel.panel-default
+        .panel-heading
+          %h3.panel-title
+            = t 'container.show.boxes.configuration.title'
+        .panel-body.no-padding
+          - config = @container.info['Config']
+          %table.table.table-striped.mb-0
+            %tbody
+            %tr
+              %td
+                = t 'container.show.boxes.configuration.Hostname'
+              %td
+                = config['Hostname']
+            %tr
+              %td
+                = t 'container.show.boxes.configuration.attach_stdin'
+              %td
+                = config['AttachStdin']
+            %tr
+              %td
+                = t 'container.show.boxes.configuration.attach_stdout'
+              %td
+                = config['AttachStdout']
+            %tr
+              %td
+                = t 'container.show.boxes.configuration.attach_stderr'
+              %td
+                = config['AttachStderr']
+            %tr
+              %td
+                = t 'container.show.boxes.configuration.tty'
+              %td
+                = config['Tty']
+            %tr
+              %td
+                = t 'container.show.boxes.configuration.image'
+              %td
+                = link_to image_path @container.info['Image'].truncate(12, omission: '') do
+                  = config['Image']
+            %tr
+              %td
+                = t 'container.show.boxes.configuration.entrypoint'
+              %td
+                - if config['Entrypoint'].kind_of?(Array)
+                  = config['Entrypoint'].join(", ")
+                - else
+                  = config['Entrypoint']
+            %tr
+              %td
+                = t 'container.show.boxes.configuration.memory'
+              %td
+                = config['Memory']
+            %tr
+              %td
+                = t 'container.show.boxes.configuration.memory_swap'
+              %td
+                = config['MemorySwap']
+            %tr
+              %td
+                = t 'container.show.boxes.configuration.cpu_shares'
+              %td
+                = config['CpuShares']
+
+            - if config['Cpuset'].length > 0
+              %tr
+                %td
+                  = t 'container.show.boxes.configuration.cpuset'
+                %td
+                  = config['Cpuset']
+
+  #logs.tab-pane{:role => "tabpanel"}
+    %br
+    %pre
+      = @logs

@@ -1,0 +1,93 @@
+de:
+  application:
+    title: "Dockerding"
+
+    nav:
+      images: "Abbilder"
+      languages: "Sprachen"
+      back_to: "Zurück zur Übersicht"
+
+  languages:
+    de: "Deutsch"
+    en: "Englisch"
+
+  container:
+    show:
+      nav:
+        tabs:
+          information: "Informationen"
+          logs: "Logs"
+
+      boxes:
+        action:
+          title: "Aktionen"
+          start: "Starten"
+          stop: "Stoppen"
+          restart: "Neustarten"
+          remove: "Löschen"
+
+        basic_information:
+          title: "Grundinformationen"
+          name: "Name"
+          status: "Status"
+          privileged: "Berechtigt"
+          pid: "Pid"
+          image: "Abbild"
+          restart_count: "Neustarts"
+          driver: "Treiber"
+
+        env:
+          title: "Environment-Variablen"
+          env: "Env"
+
+        network:
+          title: "Netzwerk"
+          ports: "Ports"
+          gateway: "Gateway"
+          ip_address: "IP-Adresse"
+          mac_address: "MAC-Adresse"
+
+        volumes:
+          title: "Ordner-Freigabe (host : vm)"
+
+        configuration:
+          title: "Konfiguration"
+          hostname: "Hostname"
+          attach_stdin: "AttachStdin"
+          attach_stdout: "AttachStdout"
+          attach_stderr: "AttachStderr"
+          tty: "Tty"
+          image: "Abbild"
+          entrypoint: "Einstiegspunkt"
+          memory: "Memory"
+          memory_swap: "MemorySwap"
+          cpu_shares: "CpuShares"
+          cpuset: "Cpuset"
+
+    index:
+      title: "Container"
+      create: "container hinzufügen"
+      table:
+        name: "Name"
+        id: "ID"
+        image: "Abbild"
+        command: "Befehl"
+        created: "Erstellt am"
+        status: "Status"
+        ports: "Ports"
+
+    new:
+      title: "Container hinzufügen"
+      hostname: "Hostname:"
+      user: "Benutzer:"
+      attach_stdin: "AttachStdin:"
+      attach_stdout: "AttachStdout:"
+      attach_stderr: "AttachStderr:"
+      env: "Env:"
+      cmd: "Befehl:"
+      entrypoint: "Einstiegspunkt:"
+      image: "Abbild:"
+      working_dir: "Arbeits-Verzeichnis:"
+      btn:
+        submit: "Erstellen"
+        cancle: "Abbrechen"
